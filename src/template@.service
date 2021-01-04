@@ -1,0 +1,11 @@
+[Unit]
+Description=FAUST CTF helloworld service
+
+[Service]
+ExecStart=-/usr/bin/stdbuf -o0 /srv/template/helloworld
+WorkingDirectory=/srv/template
+StandardInput=socket
+StandardOutput=socket
+User=template
+LimitNPROC=100
+LimitCPU=60

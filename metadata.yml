@@ -1,0 +1,33 @@
+# Human-readable name of the service
+name: MarsU
+# Name of the service for usage in paths, usernames etc.: Should only consist of lowercase alphanumeric
+# characters, must be identical to the (URL) project name of the GitLab repo
+slug: marsu
+authors:
+  - Christoph Egger <egger@cs.fau.de>
+
+install:
+  debian_packages:
+    - python3-bs4
+    - python3-misaka
+    - python3-requests
+    - uwsgi-plugin-python3
+    - python3-django/buster-backports
+    - sqlite3
+  postinst_commands:
+    - systemctl enable marsu-database-setup.service
+    - systemctl enable marsu-pad.service
+    - install -o marsu -g marsu -m 700 -d "${DATA_DIR}/pads"
+    - install -o marsu -g marsu -m 700 -d "${DATA_DIR}/data"
+  # Whether to insert a firewall rule not allowing the service user to establish outgoing network connections
+  # This should generally be enabled, except for services which need outgoing connections
+  prevent_outgoing_connections: True
+
+checker:
+  script_path: checker/marsu.py
+  # Upper bound of how long the Checker Script takes to run (for a single team)
+  # Used for scheduling checks within a tick, executions taking longer *may* get terminated
+  max_duration: 150
+  debian_packages:
+    - python3-requests
+  pip_packages: []

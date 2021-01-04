@@ -1,0 +1,48 @@
+{% extends "index.xml" %}
+
+{% block content %}
+
+<h1>{{paper.metadata.title}}</h1>
+
+
+  
+<table class="pure-table pure-table-striped">
+  {% if paper.metadata.venue is not none %}
+  <tr>
+    <td>Venue</td>
+    <td>{{paper.metadata.venue}}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td>Authors</td>
+    <td>{{paper.metadata.authors}}</td>
+  </tr>
+  {% if paper.metadata.abstract is not none %}
+  <tr>
+    <td>Abstract</td>
+    <td>{{paper.metadata.abstract}}</td>
+  </tr>
+  {% endif %}
+  {% if paper.metadata.url is not none %}
+  <tr>
+    <td>PDF</td>
+    <td><a href="{{paper.metadata.url}}">{{paper.metadata.url}}</a></td>
+  </tr>
+  {% endif %}
+  <tr>
+    <td>source</td>
+    <td>{{paper.source}}</td>
+  </tr>
+  <tr>
+    <td>handle</td>
+    <td>{{paper.handle}}</td>
+  </tr>
+  {% if paper.metadata.date is not none %}
+  <tr>
+    <td>Date</td>
+    <td>{{paper.metadata.date}}</td>
+  </tr>
+  {% endif %}
+</table>
+
+{% endblock %}

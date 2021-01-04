@@ -1,0 +1,14 @@
+[Unit]
+Description=Mars Markdown Pads
+
+[Service]
+Type=simple
+ExecStart=/srv/marsu/pad/pad
+Restart=on-failure
+User=marsu
+Group=marsu
+WorkingDirectory=/srv/marsu/pads/
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,47 @@
+{% extends "index.xml" %}
+
+{% block content %}
+	  <h1>List for {{foruser}}</h1>
+
+	  <h2>With more interested people</h2>
+
+	  <table class="pure-table pure-table-striped">
+		<thead>
+		  <th>source</th>
+		  <th>id</th>
+		  <th>title</th>
+		</thead>
+		{% for paper in papers %}
+		{% if paper.user.count > 1 %}
+		<tr>
+		  <td>{{paper.source}}</td>
+		  <td>{{paper.handle}}</td>
+		  <td>
+			<a href="{% url  'readinglist:detail' paper.source paper.handle %}">{{paper.metadata.title}}</a>
+		  </td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	  </table>
+
+	  <h2>Only {{foruser}} is interested</h2>
+
+	  <table class="pure-table pure-table-striped">
+		<thead>
+		  <th>source</th>
+		  <th>id</th>
+		  <th>title</th>
+		</thead>
+		{% for paper in papers %}
+		{% if paper.user.count == 1 %}
+		<tr>
+		  <td>{{paper.source}}</td>
+		  <td>{{paper.handle}}</td>
+		  <td>
+			<a href="{% url 'readinglist:detail' paper.source paper.handle %}">{{paper.metadata.title}}</a>
+		  </td>
+		</tr>
+		{% endif %}
+		{% endfor %}
+	  </table>
+{% endblock %}

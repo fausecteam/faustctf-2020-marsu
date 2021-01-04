@@ -1,0 +1,19 @@
+{% extends "index.xml" %}
+
+{% block content %}
+
+<h1>Edit Profile for {{user.first_name}} {{user.last_name}} ({{user.username}})</h1>
+
+<h3>Personal Information</h3>
+
+<form class="pure-form pure-form-aligned" method="POST">
+  <fieldset>
+	{% csrf_token %}
+	{% include "snippets/render-form.xml" %}
+	<div class="pure-controls">
+	  <button type="submit" value="login" class="pure-button pure-button-primary">Update</button>
+	</div>
+  </fieldset>
+</form>
+
+{% endblock %}

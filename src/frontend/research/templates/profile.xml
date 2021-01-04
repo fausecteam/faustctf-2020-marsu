@@ -1,0 +1,5 @@
+{% extends "index.xml" %}
+
+{% block content %}
+<h1>Profile for {{user.username}}</h1>
+{% endblock %}

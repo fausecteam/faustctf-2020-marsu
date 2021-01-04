@@ -1,0 +1,16 @@
+[Unit]
+Description=Setup Database
+Before=nginx.service
+Before=uwsgi.service
+
+[Service]
+Type=oneshot
+ExecStart=+/bin/chown marsu:marsu /srv/marsu/data/
+ExecStart=+/usr/bin/python3 ./manage.py collectstatic -c --no-input
+ExecStart=/usr/bin/python3 ./manage.py migrate
+WorkingDirectory=/srv/marsu/frontend
+User=marsu
+Environment=PYTHONPATH=/srv/marsu/lib
+
+[Install]
+WantedBy=multi-user.target

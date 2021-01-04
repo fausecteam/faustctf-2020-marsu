@@ -1,0 +1,118 @@
+<html>
+  <head>
+	<link rel="stylesheet"
+		  href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+		  integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w"
+		  crossorigin="anonymous" />
+
+	<style type="text/css">
+    .content {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      width: 90%;
+      max-width: 50em;
+    }
+    @media (max-width: 45em) {
+      .content {
+        border: none;
+        width: 100%;
+        margin: 0px;
+      }
+      #header {
+        border: none;
+        width: 100%;
+        margin: 0px;
+      }
+    }
+    #header {
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      width: 90%;
+      max-width: 50em;
+    }
+	</style>
+  {% block head %}
+
+  {% endblock %}
+
+  </head>
+  <body>
+	<div id="header" style="height: 3em">
+	  <div class="pure-menu pure-menu-horizontal">		
+		<ul class="pure-menu-list">
+		  <li class="pure-menu-item pure-menu-selected">
+			<a href="{% url 'home' %}" class="pure-menu-heading pure-menu-link">Home</a>
+		  </li>
+		  {% if user.is_authenticated %}
+		  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+			<a href="{% url 'researcher:view' %}" id="menuLink1" class="pure-menu-link">Profile</a>
+			<ul class="pure-menu-children">
+			  <li class="pure-menu-item">
+                <a href="{% url 'researcher:edit' %}" class="pure-menu-link">Edit</a>
+              </li>
+			  <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">Accounts</a>
+              </li>
+			  <li class="pure-menu-item">
+                <a href="{% url 'researcher:password' %}" class="pure-menu-link">Change Password</a>
+              </li>
+			  <li class="pure-menu-item">
+                <a href="#" class="pure-menu-link">Collaborators</a>
+              </li>
+			</ul>
+		  </li>
+		  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+			<a href="{% url 'readinglist:list' %}" id="menuLink1" class="pure-menu-link">Readinglist</a>
+			<ul class="pure-menu-children">
+			  <li class="pure-menu-item">
+                <a href="{% url 'readinglist:list' %}" class="pure-menu-link">{{user.first_name}} {{user.last_name}}</a>
+              </li>
+			</ul>
+		  </li>
+		  <li class="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+			<a href="#" id="menuLink1" class="pure-menu-link">Projects</a>
+			<ul class="pure-menu-children">
+			  {% for project in user.project_set.all %}
+			  <li class="pure-menu-item">
+                <a href="{% url 'project:view' project.id %}" class="pure-menu-link">{{project.title}}</a>
+              </li>
+			  {% endfor %}
+			  <li class="pure-menu-item pure-menu-separator">
+              </li>
+			  <li class="pure-menu-item">
+                <a href="{% url 'project:create' %}" class="pure-menu-link">Create New</a>
+              </li>
+			</ul>
+		  </li>
+		</ul>
+		
+		<form style="text-align: right" class="pure-form pure-menu-item pure-menu-has-children" method="POST" action="{% url 'readinglist:add' %}">
+		  {% csrf_token %}
+		  <input name="metaurl" type="text"  placeholder="Add To Readinglist" />
+		</form>
+		{% else %}
+		  <li class="pure-menu-item">
+			<a href="{% url 'login' %}" class="pure-menu-heading pure-menu-link">Login</a>
+		  </li>		
+		  <li class="pure-menu-item">
+			<a href="{% url 'register' %}" class="pure-menu-heading pure-menu-link">Register</a>
+		  </li>		
+		{% endif %}
+	  </div>
+	</div>
+
+	<div class="content">
+	  {% block content %}
+	  Hallo Welt
+	  {% endblock %}
+	</div>
+  {% block end %}
+
+  {% endblock %}
+  </body>
+</html>
+
